@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/HalBuilder/halbuilder-guava.git
+	branch = support/4.x
+	commit = 79c98aeb41d5bf76f60d51b2b6e9f2bc7198af79
+	parent = 25b9276ea34100bec7f0df5ca85b598cae8636ef
+	method = merge
+	cmdver = 0.4.0
