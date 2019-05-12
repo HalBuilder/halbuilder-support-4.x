@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -9,17 +10,11 @@
     <name>halbuilder-standard</name>
     <description>Stadnard serializer/deserializer factory providing both HAL+XML and HAL+JSON to the HalBuilder Library</description>
     <url>http://gotohal.net</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
-    <scm>
-        <connection>scm:git:git@github.com:HalBuilder/halbuilder-standard.git</connection>
-        <developerConnection>scm:git:git@github.com:HalBuilder/halbuilder-standard.git</developerConnection>
-        <url>http://github.com/HalBuilder/halbuilder-standard</url>
-        <tag>HEAD</tag>
-    </scm>
+    <licenses>
+        <license>
+            <name>Apache License</name>
+        </license>
+    </licenses>
 
     <developers>
         <developer>
@@ -30,12 +25,12 @@
         </developer>
     </developers>
 
-    <licenses>
-        <license>
-            <name>Apache License</name>
-        </license>
-    </licenses>
-
+    <scm>
+        <connection>scm:git:git@github.com:HalBuilder/halbuilder-standard.git</connection>
+        <developerConnection>scm:git:git@github.com:HalBuilder/halbuilder-standard.git</developerConnection>
+        <url>http://github.com/HalBuilder/halbuilder-standard</url>
+        <tag>HEAD</tag>
+    </scm>
     <distributionManagement>
         <repository>
             <id>sonatype-staging</id>
@@ -48,6 +43,33 @@
             <url>http://oss.sonatype.org/content/repositories/github-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.theoryinpractise</groupId>
+            <artifactId>halbuilder-api</artifactId>
+            <version>4.1.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.theoryinpractise</groupId>
+            <artifactId>halbuilder-core</artifactId>
+            <version>4.1.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.theoryinpractise</groupId>
+            <artifactId>halbuilder-json</artifactId>
+            <version>4.1.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.theoryinpractise</groupId>
+            <artifactId>halbuilder-xml</artifactId>
+            <version>4.1.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -104,28 +126,4 @@
             </build>
         </profile>
     </profiles>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.theoryinpractise</groupId>
-            <artifactId>halbuilder-api</artifactId>
-            <version>4.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.theoryinpractise</groupId>
-            <artifactId>halbuilder-core</artifactId>
-            <version>4.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.theoryinpractise</groupId>
-            <artifactId>halbuilder-json</artifactId>
-            <version>4.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.theoryinpractise</groupId>
-            <artifactId>halbuilder-xml</artifactId>
-            <version>4.1.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 </project>
-

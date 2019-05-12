@@ -15,128 +15,149 @@ import static org.fest.assertions.api.Assertions.fail;
 
 public class InterfaceSatisfactionTest {
 
-    private RepresentationFactory representationFactory = new XmlRepresentationFactory();
+  private RepresentationFactory representationFactory = new XmlRepresentationFactory();
 
-    public static interface IPerson {
-        Integer getAge();
+  public static interface IPerson {
+    Integer getAge();
 
-        Boolean getExpired();
+    Boolean getExpired();
 
-        Integer getId();
+    Integer getId();
 
-        String getName();
-    }
+    String getName();
+  }
 
-    public static interface INamed {
-        String name();
-    }
+  public static interface INamed {
+    String name();
+  }
 
-    public static interface IJob {
-        Integer getJobId();
-    }
+  public static interface IJob {
+    Integer getJobId();
+  }
 
-    public static interface ISimpleJob {
-        Integer jobId();
-    }
+  public static interface ISimpleJob {
+    Integer jobId();
+  }
 
-    public static interface INullprop {
-        String nullprop();
-    }
+  public static interface INullprop {
+    String nullprop();
+  }
 
-    @DataProvider
-    public Object[][] providerSatisfactionData() {
-        return new Object[][]{
-                {IPerson.class, true},
-                {INamed.class, true},
-                {IJob.class, false},
-                {ISimpleJob.class, false},
-        };
-    }
+  @DataProvider
+  public Object[][] providerSatisfactionData() {
+    return new Object[][] {
+      {IPerson.class, true},
+      {INamed.class, true},
+      {IJob.class, false},
+      {ISimpleJob.class, false},
+    };
+  }
 
-    @DataProvider
-    public Object[][] provideSatisfactionResources() {
-        return new Object[][]{
-                {representationFactory.readRepresentation(RepresentationFactory.HAL_XML,
-                                                          new InputStreamReader(InterfaceSatisfactionTest.class.getResourceAsStream("/example.xml"))),
-                    representationFactory.readRepresentation(RepresentationFactory.HAL_XML,
-                                                             new InputStreamReader(InterfaceSatisfactionTest.class.getResourceAsStream("/exampleWithNullProperty.xml")))}};
-    }
+  @DataProvider
+  public Object[][] provideSatisfactionResources() {
+    return new Object[][] {
+      {
+        representationFactory.readRepresentation(
+            RepresentationFactory.HAL_XML,
+            new InputStreamReader(
+                InterfaceSatisfactionTest.class.getResourceAsStream("/example.xml"))),
+        representationFactory.readRepresentation(
+            RepresentationFactory.HAL_XML,
+            new InputStreamReader(
+                InterfaceSatisfactionTest.class.getResourceAsStream(
+                    "/exampleWithNullProperty.xml")))
+      }
+    };
+  }
 
-    @Test(dataProvider = "providerSatisfactionData")
-    public void testSimpleInterfaceSatisfaction(Class<?> aClass, boolean shouldBeSatisfied) {
+  @Test(dataProvider = "providerSatisfactionData")
+  public void testSimpleInterfaceSatisfaction(Class<?> aClass, boolean shouldBeSatisfied) {
 
-        ReadableRepresentation representation = representationFactory.readRepresentation(RepresentationFactory.HAL_XML,
-                                                                                         new InputStreamReader(InterfaceSatisfactionTest.class.getResourceAsStream("/example.xml")));
-        assertThat(representation.isSatisfiedBy(InterfaceContract.newInterfaceContract(aClass))).isEqualTo(shouldBeSatisfied);
+    ReadableRepresentation representation =
+        representationFactory.readRepresentation(
+            RepresentationFactory.HAL_XML,
+            new InputStreamReader(
+                InterfaceSatisfactionTest.class.getResourceAsStream("/example.xml")));
+    assertThat(representation.isSatisfiedBy(InterfaceContract.newInterfaceContract(aClass)))
+        .isEqualTo(shouldBeSatisfied);
+  }
 
-    }
+  @Test(dataProvider = "provideSatisfactionResources")
+  public void testAnonymousInnerContractSatisfaction(
+      ReadableRepresentation representation, ReadableRepresentation nullPropertyRepresentation) {
 
-    @Test(dataProvider = "provideSatisfactionResources")
-    public void testAnonymousInnerContractSatisfaction(ReadableRepresentation representation, ReadableRepresentation nullPropertyRepresentation) {
-
-        Contract contractHasName = new Contract() {
-            public boolean isSatisfiedBy(ReadableRepresentation resource) {
-                return resource.getProperties().containsKey("name");
-            }
-        };
-
-        Contract contractHasOptional = new Contract() {
-            public boolean isSatisfiedBy(ReadableRepresentation resource) {
-                return resource.getProperties().containsKey("optional");
-            }
-        };
-
-        Contract contractHasOptionalFalse = new Contract() {
-            public boolean isSatisfiedBy(ReadableRepresentation resource) {
-                return resource.getProperties().containsKey("optional") && resource.getProperties().get("optional").equals("false");
-            }
-        };
-
-        Contract contractHasNullProperty = new Contract() {
-            public boolean isSatisfiedBy(ReadableRepresentation resource) {
-                return resource.getProperties().containsKey("nullprop") && resource.getProperties().get("nullprop") == null;
-            }
+    Contract contractHasName =
+        new Contract() {
+          public boolean isSatisfiedBy(ReadableRepresentation resource) {
+            return resource.getProperties().containsKey("name");
+          }
         };
 
-        assertThat(representation.isSatisfiedBy(contractHasName)).isEqualTo(true);
-        assertThat(representation.isSatisfiedBy(contractHasOptional)).isEqualTo(true);
-        assertThat(representation.isSatisfiedBy(contractHasOptionalFalse)).isEqualTo(false);
-        assertThat(representation.isSatisfiedBy(contractHasNullProperty)).isEqualTo(false);
+    Contract contractHasOptional =
+        new Contract() {
+          public boolean isSatisfiedBy(ReadableRepresentation resource) {
+            return resource.getProperties().containsKey("optional");
+          }
+        };
 
-        assertThat(nullPropertyRepresentation.isSatisfiedBy(contractHasNullProperty)).isEqualTo(true);
+    Contract contractHasOptionalFalse =
+        new Contract() {
+          public boolean isSatisfiedBy(ReadableRepresentation resource) {
+            return resource.getProperties().containsKey("optional")
+                && resource.getProperties().get("optional").equals("false");
+          }
+        };
+
+    Contract contractHasNullProperty =
+        new Contract() {
+          public boolean isSatisfiedBy(ReadableRepresentation resource) {
+            return resource.getProperties().containsKey("nullprop")
+                && resource.getProperties().get("nullprop") == null;
+          }
+        };
+
+    assertThat(representation.isSatisfiedBy(contractHasName)).isEqualTo(true);
+    assertThat(representation.isSatisfiedBy(contractHasOptional)).isEqualTo(true);
+    assertThat(representation.isSatisfiedBy(contractHasOptionalFalse)).isEqualTo(false);
+    assertThat(representation.isSatisfiedBy(contractHasNullProperty)).isEqualTo(false);
+
+    assertThat(nullPropertyRepresentation.isSatisfiedBy(contractHasNullProperty)).isEqualTo(true);
+  }
+
+  @Test
+  public void testClassRendering() {
+    ReadableRepresentation representation =
+        representationFactory.readRepresentation(
+            RepresentationFactory.HAL_XML,
+            new InputStreamReader(
+                InterfaceSatisfactionTest.class.getResourceAsStream("/example.xml")));
+
+    assertThat(representation.toClass(INamed.class).name()).isEqualTo("Example Resource");
+    assertThat(representation.toClass(IPerson.class).getName()).isEqualTo("Example Resource");
+    try {
+      representation.toClass(ISimpleJob.class);
+      fail("RepresentationException expected");
+    } catch (RepresentationException e) {
+      //
     }
-
-    @Test
-    public void testClassRendering() {
-        ReadableRepresentation representation = representationFactory.readRepresentation(RepresentationFactory.HAL_XML,
-                                                                                         new InputStreamReader(InterfaceSatisfactionTest.class.getResourceAsStream("/example.xml")));
-
-        assertThat(representation.toClass(INamed.class).name()).isEqualTo("Example Resource");
-        assertThat(representation.toClass(IPerson.class).getName()).isEqualTo("Example Resource");
-        try {
-            representation.toClass(ISimpleJob.class);
-            fail("RepresentationException expected");
-        } catch (RepresentationException e) {
-            //
-        }
-        try {
-            representation.toClass(IJob.class);
-            fail("RepresentationException expected");
-        } catch (RepresentationException e) {
-            //
-        }
-
+    try {
+      representation.toClass(IJob.class);
+      fail("RepresentationException expected");
+    } catch (RepresentationException e) {
+      //
     }
+  }
 
-    @Test
-    public void testNullPropertyClassRendering() {
-        ReadableRepresentation representation = representationFactory.readRepresentation(RepresentationFactory.HAL_XML,
-                                                                                         new InputStreamReader(InterfaceSatisfactionTest.class.getResourceAsStream("/exampleWithNullProperty.xml")));
+  @Test
+  public void testNullPropertyClassRendering() {
+    ReadableRepresentation representation =
+        representationFactory.readRepresentation(
+            RepresentationFactory.HAL_XML,
+            new InputStreamReader(
+                InterfaceSatisfactionTest.class.getResourceAsStream(
+                    "/exampleWithNullProperty.xml")));
 
-        assertThat(representation.toClass(INullprop.class)).isNotNull();
-        assertThat(representation.toClass(INullprop.class).nullprop() == null);
-    }
-
-
-
+    assertThat(representation.toClass(INullprop.class)).isNotNull();
+    assertThat(representation.toClass(INullprop.class).nullprop() == null);
+  }
 }
