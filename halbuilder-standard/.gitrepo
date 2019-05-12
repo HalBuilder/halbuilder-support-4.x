@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/HalBuilder/halbuilder-standard.git
+	branch = support/4.x
+	commit = 2ce7cc6c99e4442e09e631916ef28742ba6e17f9
+	parent = 96dacedddb96bc186190f2e96d4d6d053250f370
+	method = merge
+	cmdver = 0.4.0
