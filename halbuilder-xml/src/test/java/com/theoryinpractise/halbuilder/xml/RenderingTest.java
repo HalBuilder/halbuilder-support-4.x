@@ -1,5 +1,7 @@
 package com.theoryinpractise.halbuilder.xml;
 
+import static org.fest.assertions.api.Assertions.assertThat;
+
 import com.damnhandy.uri.template.MalformedUriTemplateException;
 import com.damnhandy.uri.template.UriTemplate;
 import com.damnhandy.uri.template.VariableExpansionException;
@@ -9,19 +11,15 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.io.Resources;
 import com.theoryinpractise.halbuilder.api.ReadableRepresentation;
-import com.theoryinpractise.halbuilder.api.Representable;
 import com.theoryinpractise.halbuilder.api.Representation;
 import com.theoryinpractise.halbuilder.api.RepresentationException;
 import com.theoryinpractise.halbuilder.api.RepresentationFactory;
 import com.theoryinpractise.halbuilder.impl.representations.MutableRepresentation;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-
-import static org.fest.assertions.api.Assertions.assertThat;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 public class RenderingTest {
   private static final String ROOT_URL = "https://example.com";
@@ -42,7 +40,6 @@ public class RenderingTest {
   private String exampleWithLiteralNullPropertyXml;
   private String exampleWithMultipleNestedSubresourcesXml;
   private String exampleWithTemplateXml;
-  private String exampleWithArray;
 
   @BeforeMethod
   public void setup() throws IOException {
@@ -192,16 +189,13 @@ public class RenderingTest {
         newBaseResource(href)
             .withLink("ns:users", BASE_URL + href + "?users")
             .withRepresentable(
-                new Representable() {
-                  public void representResource(Representation resource) {
+                resource ->
                     resource
                         .withProperty("id", 123456)
                         .withProperty("age", 33)
                         .withProperty("name", "Example Resource")
                         .withProperty("optional", Boolean.TRUE)
-                        .withProperty("expired", Boolean.FALSE);
-                  }
-                });
+                        .withProperty("expired", Boolean.FALSE));
 
     assertThat(party.toString(RepresentationFactory.HAL_XML)).isEqualTo(exampleXml);
   }

@@ -1,7 +1,10 @@
 package com.theoryinpractise.halbuilder.xml;
 
 import com.google.common.base.Strings;
-import com.theoryinpractise.halbuilder.api.*;
+import com.theoryinpractise.halbuilder.api.Link;
+import com.theoryinpractise.halbuilder.api.ReadableRepresentation;
+import com.theoryinpractise.halbuilder.api.RepresentationException;
+import com.theoryinpractise.halbuilder.api.RepresentationFactory;
 import com.theoryinpractise.halbuilder.api.RepresentationWriter;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
@@ -20,15 +23,16 @@ import static com.theoryinpractise.halbuilder.impl.api.Support.HREF;
 import static com.theoryinpractise.halbuilder.impl.api.Support.HREFLANG;
 import static com.theoryinpractise.halbuilder.impl.api.Support.LINK;
 import static com.theoryinpractise.halbuilder.impl.api.Support.NAME;
+import static com.theoryinpractise.halbuilder.impl.api.Support.PROFILE;
 import static com.theoryinpractise.halbuilder.impl.api.Support.REL;
 import static com.theoryinpractise.halbuilder.impl.api.Support.SELF;
 import static com.theoryinpractise.halbuilder.impl.api.Support.TEMPLATED;
-import static com.theoryinpractise.halbuilder.impl.api.Support.PROFILE;
 import static com.theoryinpractise.halbuilder.impl.api.Support.TITLE;
 import static com.theoryinpractise.halbuilder.xml.XmlRepresentationFactory.XSI_NAMESPACE;
 
 public class XmlRepresentationWriter implements RepresentationWriter<String> {
 
+  @Override
   public void write(ReadableRepresentation representation, Set<URI> flags, Writer writer) {
     final Element element = renderElement("self", representation, false);
     try {
@@ -55,7 +59,7 @@ public class XmlRepresentationWriter implements RepresentationWriter<String> {
       resourceElement.setAttribute("href", resourceLink.getHref());
     }
 
-    if (!rel.equals("self")) {
+    if (!"self".equals(rel)) {
       resourceElement.setAttribute("rel", rel);
     }
 

@@ -17,7 +17,7 @@ public class InterfaceSatisfactionTest {
 
   private RepresentationFactory representationFactory = new XmlRepresentationFactory();
 
-  public static interface IPerson {
+  public interface IPerson {
     Integer getAge();
 
     Boolean getExpired();
@@ -27,19 +27,19 @@ public class InterfaceSatisfactionTest {
     String getName();
   }
 
-  public static interface INamed {
+  public interface INamed {
     String name();
   }
 
-  public static interface IJob {
+  public interface IJob {
     Integer getJobId();
   }
 
-  public static interface ISimpleJob {
+  public interface ISimpleJob {
     Integer jobId();
   }
 
-  public static interface INullprop {
+  public interface INullprop {
     String nullprop();
   }
 
@@ -86,35 +86,20 @@ public class InterfaceSatisfactionTest {
   public void testAnonymousInnerContractSatisfaction(
       ReadableRepresentation representation, ReadableRepresentation nullPropertyRepresentation) {
 
-    Contract contractHasName =
-        new Contract() {
-          public boolean isSatisfiedBy(ReadableRepresentation resource) {
-            return resource.getProperties().containsKey("name");
-          }
-        };
+    Contract contractHasName = resource -> resource.getProperties().containsKey("name");
 
-    Contract contractHasOptional =
-        new Contract() {
-          public boolean isSatisfiedBy(ReadableRepresentation resource) {
-            return resource.getProperties().containsKey("optional");
-          }
-        };
+    Contract contractHasOptional = resource -> resource.getProperties().containsKey("optional");
 
+    @SuppressWarnings("NullAway")
     Contract contractHasOptionalFalse =
-        new Contract() {
-          public boolean isSatisfiedBy(ReadableRepresentation resource) {
-            return resource.getProperties().containsKey("optional")
+        resource ->
+            resource.getProperties().containsKey("optional")
                 && resource.getProperties().get("optional").equals("false");
-          }
-        };
 
     Contract contractHasNullProperty =
-        new Contract() {
-          public boolean isSatisfiedBy(ReadableRepresentation resource) {
-            return resource.getProperties().containsKey("nullprop")
+        resource ->
+            resource.getProperties().containsKey("nullprop")
                 && resource.getProperties().get("nullprop") == null;
-          }
-        };
 
     assertThat(representation.isSatisfiedBy(contractHasName)).isEqualTo(true);
     assertThat(representation.isSatisfiedBy(contractHasOptional)).isEqualTo(true);

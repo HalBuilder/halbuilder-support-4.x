@@ -1,22 +1,5 @@
 package com.theoryinpractise.halbuilder.xml;
 
-import com.theoryinpractise.halbuilder.AbstractRepresentationFactory;
-import com.theoryinpractise.halbuilder.api.ContentRepresentation;
-import com.theoryinpractise.halbuilder.api.Representation;
-import com.theoryinpractise.halbuilder.api.RepresentationException;
-import com.theoryinpractise.halbuilder.api.RepresentationReader;
-import com.theoryinpractise.halbuilder.impl.representations.ContentBasedRepresentation;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.Namespace;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.XMLOutputter;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.util.List;
-
 import static com.theoryinpractise.halbuilder.impl.api.Support.HREF;
 import static com.theoryinpractise.halbuilder.impl.api.Support.HREFLANG;
 import static com.theoryinpractise.halbuilder.impl.api.Support.NAME;
@@ -24,6 +7,22 @@ import static com.theoryinpractise.halbuilder.impl.api.Support.PROFILE;
 import static com.theoryinpractise.halbuilder.impl.api.Support.REL;
 import static com.theoryinpractise.halbuilder.impl.api.Support.TITLE;
 import static com.theoryinpractise.halbuilder.xml.XmlRepresentationFactory.XSI_NAMESPACE;
+
+import com.theoryinpractise.halbuilder.AbstractRepresentationFactory;
+import com.theoryinpractise.halbuilder.api.ContentRepresentation;
+import com.theoryinpractise.halbuilder.api.Representation;
+import com.theoryinpractise.halbuilder.api.RepresentationException;
+import com.theoryinpractise.halbuilder.api.RepresentationReader;
+import com.theoryinpractise.halbuilder.impl.representations.ContentBasedRepresentation;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.List;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.Namespace;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.XMLOutputter;
 
 public class XmlRepresentationReader implements RepresentationReader {
   private AbstractRepresentationFactory representationFactory;
@@ -35,6 +34,7 @@ public class XmlRepresentationReader implements RepresentationReader {
     this.xmlOutputter = new XMLOutputter();
   }
 
+  @Override
   public ContentRepresentation read(Reader reader) {
     try {
       Document d = new SAXBuilder().build(reader);
