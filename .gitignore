@@ -3,4 +3,6 @@
 .project
 .idea
 pom.xml.versionsBackup
+pom.xml.orig
+pom.xml.bak
 target
