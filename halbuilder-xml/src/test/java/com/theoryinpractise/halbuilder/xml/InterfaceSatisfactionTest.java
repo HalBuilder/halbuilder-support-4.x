@@ -58,14 +58,9 @@ public class InterfaceSatisfactionTest {
     return new Object[][] {
       {
         representationFactory.readRepresentation(
-            RepresentationFactory.HAL_XML,
-            new InputStreamReader(
-                InterfaceSatisfactionTest.class.getResourceAsStream("/example.xml"))),
+            RepresentationFactory.HAL_XML, new InputStreamReader(InterfaceSatisfactionTest.class.getResourceAsStream("/example.xml"))),
         representationFactory.readRepresentation(
-            RepresentationFactory.HAL_XML,
-            new InputStreamReader(
-                InterfaceSatisfactionTest.class.getResourceAsStream(
-                    "/exampleWithNullProperty.xml")))
+            RepresentationFactory.HAL_XML, new InputStreamReader(InterfaceSatisfactionTest.class.getResourceAsStream("/exampleWithNullProperty.xml")))
       }
     };
   }
@@ -75,16 +70,12 @@ public class InterfaceSatisfactionTest {
 
     ReadableRepresentation representation =
         representationFactory.readRepresentation(
-            RepresentationFactory.HAL_XML,
-            new InputStreamReader(
-                InterfaceSatisfactionTest.class.getResourceAsStream("/example.xml")));
-    assertThat(representation.isSatisfiedBy(InterfaceContract.newInterfaceContract(aClass)))
-        .isEqualTo(shouldBeSatisfied);
+            RepresentationFactory.HAL_XML, new InputStreamReader(InterfaceSatisfactionTest.class.getResourceAsStream("/example.xml")));
+    assertThat(representation.isSatisfiedBy(InterfaceContract.newInterfaceContract(aClass))).isEqualTo(shouldBeSatisfied);
   }
 
   @Test(dataProvider = "provideSatisfactionResources")
-  public void testAnonymousInnerContractSatisfaction(
-      ReadableRepresentation representation, ReadableRepresentation nullPropertyRepresentation) {
+  public void testAnonymousInnerContractSatisfaction(ReadableRepresentation representation, ReadableRepresentation nullPropertyRepresentation) {
 
     Contract contractHasName = resource -> resource.getProperties().containsKey("name");
 
@@ -92,14 +83,9 @@ public class InterfaceSatisfactionTest {
 
     @SuppressWarnings("NullAway")
     Contract contractHasOptionalFalse =
-        resource ->
-            resource.getProperties().containsKey("optional")
-                && resource.getProperties().get("optional").equals("false");
+        resource -> resource.getProperties().containsKey("optional") && resource.getProperties().get("optional").equals("false");
 
-    Contract contractHasNullProperty =
-        resource ->
-            resource.getProperties().containsKey("nullprop")
-                && resource.getProperties().get("nullprop") == null;
+    Contract contractHasNullProperty = resource -> resource.getProperties().containsKey("nullprop") && resource.getProperties().get("nullprop") == null;
 
     assertThat(representation.isSatisfiedBy(contractHasName)).isEqualTo(true);
     assertThat(representation.isSatisfiedBy(contractHasOptional)).isEqualTo(true);
@@ -113,9 +99,7 @@ public class InterfaceSatisfactionTest {
   public void testClassRendering() {
     ReadableRepresentation representation =
         representationFactory.readRepresentation(
-            RepresentationFactory.HAL_XML,
-            new InputStreamReader(
-                InterfaceSatisfactionTest.class.getResourceAsStream("/example.xml")));
+            RepresentationFactory.HAL_XML, new InputStreamReader(InterfaceSatisfactionTest.class.getResourceAsStream("/example.xml")));
 
     assertThat(representation.toClass(INamed.class).name()).isEqualTo("Example Resource");
     assertThat(representation.toClass(IPerson.class).getName()).isEqualTo("Example Resource");
@@ -137,10 +121,7 @@ public class InterfaceSatisfactionTest {
   public void testNullPropertyClassRendering() {
     ReadableRepresentation representation =
         representationFactory.readRepresentation(
-            RepresentationFactory.HAL_XML,
-            new InputStreamReader(
-                InterfaceSatisfactionTest.class.getResourceAsStream(
-                    "/exampleWithNullProperty.xml")));
+            RepresentationFactory.HAL_XML, new InputStreamReader(InterfaceSatisfactionTest.class.getResourceAsStream("/exampleWithNullProperty.xml")));
 
     assertThat(representation.toClass(INullprop.class)).isNotNull();
     assertThat(representation.toClass(INullprop.class).nullprop() == null);

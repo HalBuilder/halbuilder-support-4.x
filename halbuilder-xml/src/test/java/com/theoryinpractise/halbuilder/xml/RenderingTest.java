@@ -43,59 +43,25 @@ public class RenderingTest {
 
   @BeforeMethod
   public void setup() throws IOException {
-    exampleXmlWithoutHref =
-        Resources.toString(
-                RenderingTest.class.getResource("/exampleWithoutHref.xml"), Charsets.UTF_8)
-            .trim()
-            .replaceAll("\n", "\r\n");
-    exampleXml =
-        Resources.toString(RenderingTest.class.getResource("/example.xml"), Charsets.UTF_8)
-            .trim()
-            .replaceAll("\n", "\r\n");
+    exampleXmlWithoutHref = Resources.toString(RenderingTest.class.getResource("/exampleWithoutHref.xml"), Charsets.UTF_8).trim().replaceAll("\n", "\r\n");
+    exampleXml = Resources.toString(RenderingTest.class.getResource("/example.xml"), Charsets.UTF_8).trim().replaceAll("\n", "\r\n");
     exampleWithSubresourceXml =
-        Resources.toString(
-                RenderingTest.class.getResource("/exampleWithSubresource.xml"), Charsets.UTF_8)
-            .trim()
-            .replaceAll("\n", "\r\n");
+        Resources.toString(RenderingTest.class.getResource("/exampleWithSubresource.xml"), Charsets.UTF_8).trim().replaceAll("\n", "\r\n");
     exampleWithSubresourceLinkingToItselfXml =
-        Resources.toString(
-                RenderingTest.class.getResource("/exampleWithSubresourceLinkingToItself.xml"),
-                Charsets.UTF_8)
-            .trim()
-            .replaceAll("\n", "\r\n");
+        Resources.toString(RenderingTest.class.getResource("/exampleWithSubresourceLinkingToItself.xml"), Charsets.UTF_8).trim().replaceAll("\n", "\r\n");
     exampleWithMultipleSubresourcesXml =
-        Resources.toString(
-                RenderingTest.class.getResource("/exampleWithMultipleSubresources.xml"),
-                Charsets.UTF_8)
-            .trim()
-            .replaceAll("\n", "\r\n");
+        Resources.toString(RenderingTest.class.getResource("/exampleWithMultipleSubresources.xml"), Charsets.UTF_8).trim().replaceAll("\n", "\r\n");
     exampleWithNullPropertyXml =
-        Resources.toString(
-                RenderingTest.class.getResource("/exampleWithNullProperty.xml"), Charsets.UTF_8)
-            .trim()
-            .replaceAll("\n", "\r\n");
+        Resources.toString(RenderingTest.class.getResource("/exampleWithNullProperty.xml"), Charsets.UTF_8).trim().replaceAll("\n", "\r\n");
     exampleWithLiteralNullPropertyXml =
-        Resources.toString(
-                RenderingTest.class.getResource("/exampleWithLiteralNullProperty.xml"),
-                Charsets.UTF_8)
-            .trim()
-            .replaceAll("\n", "\r\n");
+        Resources.toString(RenderingTest.class.getResource("/exampleWithLiteralNullProperty.xml"), Charsets.UTF_8).trim().replaceAll("\n", "\r\n");
     exampleWithMultipleNestedSubresourcesXml =
-        Resources.toString(
-                RenderingTest.class.getResource("/exampleWithMultipleNestedSubresources.xml"),
-                Charsets.UTF_8)
-            .trim()
-            .replaceAll("\n", "\r\n");
-    exampleWithTemplateXml =
-        Resources.toString(
-                RenderingTest.class.getResource("/exampleWithTemplate.xml"), Charsets.UTF_8)
-            .trim()
-            .replaceAll("\n", "\r\n");
+        Resources.toString(RenderingTest.class.getResource("/exampleWithMultipleNestedSubresources.xml"), Charsets.UTF_8).trim().replaceAll("\n", "\r\n");
+    exampleWithTemplateXml = Resources.toString(RenderingTest.class.getResource("/exampleWithTemplate.xml"), Charsets.UTF_8).trim().replaceAll("\n", "\r\n");
   }
 
   private Representation newBaseResource(final Representation resource) {
-    return resource.withLink(
-        "ns:parent", BASE_URL + "customer/1234", "bob", "The Parent", "en", "");
+    return resource.withLink("ns:parent", BASE_URL + "customer/1234", "bob", "The Parent", "en", "");
   }
 
   private Representation newBaseResource(final URI uri) {
@@ -110,31 +76,24 @@ public class RenderingTest {
   @Test
   public void testFactoryWithLinks() {
 
-    RepresentationFactory representationFactory =
-        new XmlRepresentationFactory().withLink("home", "https://example.com/home");
+    RepresentationFactory representationFactory = new XmlRepresentationFactory().withLink("home", "https://example.com/home");
 
     Representation resource = representationFactory.newRepresentation("/");
 
     assertThat(resource.getCanonicalLinks()).hasSize(2);
     assertThat(resource.getLinksByRel("home")).hasSize(1);
-    assertThat(resource.getLinksByRel("home").iterator().next().toString())
-        .isEqualTo("<link rel=\"home\" href=\"https://example.com/home\"/>");
+    assertThat(resource.getLinksByRel("home").iterator().next().toString()).isEqualTo("<link rel=\"home\" href=\"https://example.com/home\"/>");
   }
 
   @Test(expectedExceptions = RepresentationException.class)
   public void testFactoryWithDuplicateNamespaces() {
-    new XmlRepresentationFactory()
-        .withNamespace("home", "https://example.com/api/")
-        .withNamespace("home", "https://example.com/api/");
+    new XmlRepresentationFactory().withNamespace("home", "https://example.com/api/").withNamespace("home", "https://example.com/api/");
   }
 
   @Test
-  public void testUriBuilderHal()
-      throws URISyntaxException, MalformedUriTemplateException, VariableExpansionException {
+  public void testUriBuilderHal() throws URISyntaxException, MalformedUriTemplateException, VariableExpansionException {
 
-    String path =
-        UriTemplate.fromTemplate(BASE_URL + "customer/{id}")
-            .expand(ImmutableMap.<String, Object>of("id", "123456"));
+    String path = UriTemplate.fromTemplate(BASE_URL + "customer/{id}").expand(ImmutableMap.<String, Object>of("id", "123456"));
 
     ReadableRepresentation party =
         newBaseResource(new URI(path))
@@ -145,22 +104,17 @@ public class RenderingTest {
             .withProperty("optional", Boolean.TRUE)
             .withProperty("expired", Boolean.FALSE);
 
-    assertThat(party.getResourceLink().getHref())
-        .isEqualTo("https://example.com/api/customer/123456");
+    assertThat(party.getResourceLink().getHref()).isEqualTo("https://example.com/api/customer/123456");
     assertThat(party.toString(RepresentationFactory.HAL_XML)).isEqualTo(exampleXml);
   }
 
   @Test
   public void testResourcesWithoutHref() {
 
-    ReadableRepresentation party =
-        new XmlRepresentationFactory().newRepresentation().withProperty("name", "Example Resource");
+    ReadableRepresentation party = new XmlRepresentationFactory().newRepresentation().withProperty("name", "Example Resource");
 
     assertThat(party.getResourceLink()).isNull();
-    assertThat(
-            party.toString(
-                RepresentationFactory.HAL_XML, ImmutableSet.of(RepresentationFactory.PRETTY_PRINT)))
-        .isEqualTo(exampleXmlWithoutHref);
+    assertThat(party.toString(RepresentationFactory.HAL_XML, ImmutableSet.of(RepresentationFactory.PRETTY_PRINT))).isEqualTo(exampleXmlWithoutHref);
   }
 
   @Test
@@ -176,8 +130,7 @@ public class RenderingTest {
             .withProperty("optional", Boolean.TRUE)
             .withProperty("expired", Boolean.FALSE);
 
-    assertThat(party.getResourceLink().getHref())
-        .isEqualTo("https://example.com/api/customer/123456");
+    assertThat(party.getResourceLink().getHref()).isEqualTo("https://example.com/api/customer/123456");
     assertThat(party.toString(RepresentationFactory.HAL_XML)).isEqualTo(exampleXml);
   }
 
@@ -205,9 +158,7 @@ public class RenderingTest {
 
     String href = "customer/123456";
     ReadableRepresentation party =
-        newBaseResource(href)
-            .withLink("ns:users", BASE_URL + href + "?users")
-            .withBean(new Customer(123456, "Example Resource", 33));
+        newBaseResource(href).withLink("ns:users", BASE_URL + href + "?users").withBean(new Customer(123456, "Example Resource", 33));
 
     assertThat(party.toString(RepresentationFactory.HAL_XML)).isEqualTo(exampleXml);
   }
@@ -217,9 +168,7 @@ public class RenderingTest {
 
     String href = "customer/123456";
     ReadableRepresentation party =
-        newBaseResource(href)
-            .withLink("ns:users", BASE_URL + href + "?users")
-            .withFields(new OtherCustomer(123456, "Example Resource", 33));
+        newBaseResource(href).withLink("ns:users", BASE_URL + href + "?users").withFields(new OtherCustomer(123456, "Example Resource", 33));
 
     assertThat(party.toString(RepresentationFactory.HAL_XML)).isEqualTo(exampleXml);
   }
@@ -262,8 +211,7 @@ public class RenderingTest {
                     .withProperty("age", 32)
                     .withProperty("optional", true));
 
-    assertThat(party.toString(RepresentationFactory.HAL_XML))
-        .isEqualTo(exampleWithSubresourceLinkingToItselfXml);
+    assertThat(party.toString(RepresentationFactory.HAL_XML)).isEqualTo(exampleWithSubresourceLinkingToItselfXml);
   }
 
   @Test
@@ -273,8 +221,7 @@ public class RenderingTest {
     ReadableRepresentation party =
         newBaseResource(href)
             .withLink("ns:users", BASE_URL + href + "?users")
-            .withBeanBasedRepresentation(
-                "ns:user", ROOT_URL + "/user/11", new Customer(11, "Example User", 32));
+            .withBeanBasedRepresentation("ns:user", ROOT_URL + "/user/11", new Customer(11, "Example User", 32));
 
     assertThat(party.toString(RepresentationFactory.HAL_XML)).isEqualTo(exampleWithSubresourceXml);
   }
@@ -286,40 +233,28 @@ public class RenderingTest {
     ReadableRepresentation party =
         newBaseResource(href)
             .withLink("ns:users", BASE_URL + href + "?users")
-            .withBeanBasedRepresentation(
-                "ns:user", ROOT_URL + "/user/11", new Customer(11, "Example User", 32))
-            .withBeanBasedRepresentation(
-                "ns:user", ROOT_URL + "/user/12", new Customer(12, "Example User", 32));
+            .withBeanBasedRepresentation("ns:user", ROOT_URL + "/user/11", new Customer(11, "Example User", 32))
+            .withBeanBasedRepresentation("ns:user", ROOT_URL + "/user/12", new Customer(12, "Example User", 32));
 
-    assertThat(party.toString(RepresentationFactory.HAL_XML))
-        .isEqualTo(exampleWithMultipleSubresourcesXml);
+    assertThat(party.toString(RepresentationFactory.HAL_XML)).isEqualTo(exampleWithMultipleSubresourcesXml);
   }
 
   @Test
-  public void testLinkWithDamnHandyUriTemplate()
-      throws MalformedUriTemplateException, VariableExpansionException {
+  public void testLinkWithDamnHandyUriTemplate() throws MalformedUriTemplateException, VariableExpansionException {
 
     Phone phone = new Phone(1234, "phone-123");
 
-    String uri =
-        UriTemplate.fromTemplate(ROOT_URL + "/customer/phone{?id,number}")
-            .set("id", phone.getId())
-            .set("number", phone.getNumber())
-            .expand();
+    String uri = UriTemplate.fromTemplate(ROOT_URL + "/customer/phone{?id,number}").set("id", phone.getId()).set("number", phone.getNumber()).expand();
 
     ReadableRepresentation representation = newBaseResource("/test").withLink("phone", uri);
 
-    assertThat(representation.getLinkByRel("phone").getHref())
-        .isEqualTo("https://example.com/customer/phone?id=1234&number=phone-123");
+    assertThat(representation.getLinkByRel("phone").getHref()).isEqualTo("https://example.com/customer/phone?id=1234&number=phone-123");
   }
 
   @Test
-  public void testNullPropertyHal()
-      throws URISyntaxException, MalformedUriTemplateException, VariableExpansionException {
+  public void testNullPropertyHal() throws URISyntaxException, MalformedUriTemplateException, VariableExpansionException {
 
-    String path =
-        UriTemplate.fromTemplate(BASE_URL + "customer/{id}")
-            .expand(ImmutableMap.<String, Object>of("id", "123456"));
+    String path = UriTemplate.fromTemplate(BASE_URL + "customer/{id}").expand(ImmutableMap.<String, Object>of("id", "123456"));
 
     ReadableRepresentation party =
         newBaseResource(new URI(path))
@@ -331,17 +266,13 @@ public class RenderingTest {
             .withProperty("expired", Boolean.FALSE)
             .withProperty("nullprop", null);
 
-    assertThat(party.getResourceLink().getHref())
-        .isEqualTo("https://example.com/api/customer/123456");
+    assertThat(party.getResourceLink().getHref()).isEqualTo("https://example.com/api/customer/123456");
     assertThat(party.toString(RepresentationFactory.HAL_XML)).isEqualTo(exampleWithNullPropertyXml);
   }
 
   @Test
-  public void testLiteralNullPropertyHal()
-      throws URISyntaxException, MalformedUriTemplateException, VariableExpansionException {
-    String path =
-        UriTemplate.fromTemplate(BASE_URL + "customer/{id}")
-            .expand(ImmutableMap.<String, Object>of("id", "123456"));
+  public void testLiteralNullPropertyHal() throws URISyntaxException, MalformedUriTemplateException, VariableExpansionException {
+    String path = UriTemplate.fromTemplate(BASE_URL + "customer/{id}").expand(ImmutableMap.<String, Object>of("id", "123456"));
 
     ReadableRepresentation party =
         newBaseResource(new URI(path))
@@ -353,17 +284,13 @@ public class RenderingTest {
             .withProperty("expired", Boolean.FALSE)
             .withProperty("nullval", "null");
 
-    assertThat(party.getResourceLink().getHref())
-        .isEqualTo("https://example.com/api/customer/123456");
-    assertThat(party.toString(RepresentationFactory.HAL_XML))
-        .isEqualTo(exampleWithLiteralNullPropertyXml);
+    assertThat(party.getResourceLink().getHref()).isEqualTo("https://example.com/api/customer/123456");
+    assertThat(party.toString(RepresentationFactory.HAL_XML)).isEqualTo(exampleWithLiteralNullPropertyXml);
   }
 
   @Test
   public void testHalWithUriTemplate() {
-    ReadableRepresentation party =
-        newBaseResource("customer")
-            .withLink("ns:query", ROOT_URL + "/api/customer/search{?queryParam}");
+    ReadableRepresentation party = newBaseResource("customer").withLink("ns:query", ROOT_URL + "/api/customer/search{?queryParam}");
 
     assertThat(party.toString(RepresentationFactory.HAL_XML)).isEqualTo(exampleWithTemplateXml);
   }
@@ -376,18 +303,13 @@ public class RenderingTest {
         newBaseResource(href)
             .withNamespace("phone", "https://example.com/apidocs/phone/{rel}")
             .withLink("ns:users", BASE_URL + href + "?users")
-            .withBeanBasedRepresentation(
-                "ns:user", ROOT_URL + "/user/11", new Customer(11, "Example User", 32))
-            .withBeanBasedRepresentation(
-                "ns:user", ROOT_URL + "/user/12", new Customer(12, "Example User", 32));
+            .withBeanBasedRepresentation("ns:user", ROOT_URL + "/user/11", new Customer(11, "Example User", 32))
+            .withBeanBasedRepresentation("ns:user", ROOT_URL + "/user/12", new Customer(12, "Example User", 32));
 
-    MutableRepresentation mutableRepresentation =
-        (MutableRepresentation) Iterables.getFirst(party.getResources(), null).getValue();
-    mutableRepresentation.withBeanBasedRepresentation(
-        "phone:cell", ROOT_URL + "/phone/1", new Phone(1, "555-666-7890"));
+    MutableRepresentation mutableRepresentation = (MutableRepresentation) Iterables.getFirst(party.getResources(), null).getValue();
+    mutableRepresentation.withBeanBasedRepresentation("phone:cell", ROOT_URL + "/phone/1", new Phone(1, "555-666-7890"));
 
-    assertThat(party.toString(RepresentationFactory.HAL_XML))
-        .isEqualTo(exampleWithMultipleNestedSubresourcesXml);
+    assertThat(party.toString(RepresentationFactory.HAL_XML)).isEqualTo(exampleWithMultipleNestedSubresourcesXml);
   }
 
   public static class Phone {

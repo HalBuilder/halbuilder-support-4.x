@@ -36,10 +36,7 @@ public class XmlRepresentationWriter implements RepresentationWriter<String> {
   public void write(ReadableRepresentation representation, Set<URI> flags, Writer writer) {
     final Element element = renderElement("self", representation, false);
     try {
-      Format prettyFormat =
-          flags.contains(RepresentationFactory.PRETTY_PRINT)
-              ? Format.getPrettyFormat()
-              : Format.getCompactFormat();
+      Format prettyFormat = flags.contains(RepresentationFactory.PRETTY_PRINT) ? Format.getPrettyFormat() : Format.getCompactFormat();
 
       final XMLOutputter outputter = new XMLOutputter(prettyFormat);
       outputter.output(element, writer);
@@ -48,8 +45,7 @@ public class XmlRepresentationWriter implements RepresentationWriter<String> {
     }
   }
 
-  private Element renderElement(
-      String rel, ReadableRepresentation representation, boolean embedded) {
+  private Element renderElement(String rel, ReadableRepresentation representation, boolean embedded) {
 
     final Link resourceLink = representation.getResourceLink();
 
@@ -66,8 +62,7 @@ public class XmlRepresentationWriter implements RepresentationWriter<String> {
     // Only add namespaces to non-embedded resources
     if (!embedded) {
       for (Map.Entry<String, String> entry : representation.getNamespaces().entrySet()) {
-        resourceElement.addNamespaceDeclaration(
-            Namespace.getNamespace(entry.getKey(), entry.getValue()));
+        resourceElement.addNamespaceDeclaration(Namespace.getNamespace(entry.getKey(), entry.getValue()));
       }
       // Add the instance namespace if there are null properties on this
       // representation or on any embedded resources.
@@ -118,8 +113,7 @@ public class XmlRepresentationWriter implements RepresentationWriter<String> {
 
     // add subresources
     for (Map.Entry<String, ReadableRepresentation> halResource : representation.getResources()) {
-      Element subResourceElement =
-          renderElement(halResource.getKey(), halResource.getValue(), true);
+      Element subResourceElement = renderElement(halResource.getKey(), halResource.getValue(), true);
       resourceElement.addContent(subResourceElement);
     }
 

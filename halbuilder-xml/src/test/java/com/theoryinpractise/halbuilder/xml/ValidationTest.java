@@ -13,15 +13,12 @@ public class ValidationTest {
   RepresentationFactory representationFactory = new XmlRepresentationFactory();
 
   ReadableRepresentation representation =
-      representationFactory.readRepresentation(
-          RepresentationFactory.HAL_XML,
-          new InputStreamReader(ValidationTest.class.getResourceAsStream("/example.xml")));
+      representationFactory.readRepresentation(RepresentationFactory.HAL_XML, new InputStreamReader(ValidationTest.class.getResourceAsStream("/example.xml")));
 
   @Test
   public void testValidation() {
 
-    Contract noWhiteSpaceInName =
-        resource -> ((String) resource.getValue("name", "")).matches("\\W*");
+    Contract noWhiteSpaceInName = resource -> ((String) resource.getValue("name", "")).matches("\\W*");
 
     Contract anyCharsInName = resource -> ((String) resource.getValue("name", "")).matches(".*");
 

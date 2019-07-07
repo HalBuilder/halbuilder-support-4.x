@@ -50,9 +50,7 @@ public class XmlRepresentationReader implements RepresentationReader {
   private ContentRepresentation readRepresentation(Element root) {
     String href = root.getAttributeValue("href");
 
-    ContentBasedRepresentation resource =
-        new ContentBasedRepresentation(
-            representationFactory, xmlOutputter.outputString(root), href);
+    ContentBasedRepresentation resource = new ContentBasedRepresentation(representationFactory, xmlOutputter.outputString(root), href);
 
     readNamespaces(resource, root);
     readLinks(resource, root);

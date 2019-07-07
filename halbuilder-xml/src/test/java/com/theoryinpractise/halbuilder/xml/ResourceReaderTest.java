@@ -20,33 +20,17 @@ public class ResourceReaderTest {
   @DataProvider
   public Object[][] provideResources() {
     return new Object[][] {
-      {
-        representationFactory.readRepresentation(
-            HAL_XML,
-            new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/example.xml")))
-      },
-      {
-        representationFactory.readRepresentation(
-            HAL_JSON,
-            new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/example.json")))
-      },
+      {representationFactory.readRepresentation(HAL_XML, new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/example.xml")))},
+      {representationFactory.readRepresentation(HAL_JSON, new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/example.json")))},
     };
   }
 
   @DataProvider
   public Object[][] provideResourcesWithNulls() {
     return new Object[][] {
+      {representationFactory.readRepresentation(HAL_XML, new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/exampleWithNullProperty.xml")))},
       {
-        representationFactory.readRepresentation(
-            HAL_XML,
-            new InputStreamReader(
-                ResourceReaderTest.class.getResourceAsStream("/exampleWithNullProperty.xml")))
-      },
-      {
-        representationFactory.readRepresentation(
-            HAL_JSON,
-            new InputStreamReader(
-                ResourceReaderTest.class.getResourceAsStream("/exampleWithNullProperty.json")))
+        representationFactory.readRepresentation(HAL_JSON, new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/exampleWithNullProperty.json")))
       },
     };
   }
@@ -54,36 +38,16 @@ public class ResourceReaderTest {
   @DataProvider
   public Object[][] provideSubResources() {
     return new Object[][] {
-      {
-        representationFactory.readRepresentation(
-            HAL_XML,
-            new InputStreamReader(
-                ResourceReaderTest.class.getResourceAsStream("/exampleWithSubresource.xml")))
-      },
-      {
-        representationFactory.readRepresentation(
-            HAL_JSON,
-            new InputStreamReader(
-                ResourceReaderTest.class.getResourceAsStream("/exampleWithSubresource.json")))
-      },
+      {representationFactory.readRepresentation(HAL_XML, new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/exampleWithSubresource.xml")))},
+      {representationFactory.readRepresentation(HAL_JSON, new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/exampleWithSubresource.json")))},
     };
   }
 
   @DataProvider
   public Object[][] provideResourcesWithouHref() {
     return new Object[][] {
-      {
-        representationFactory.readRepresentation(
-            HAL_XML,
-            new InputStreamReader(
-                ResourceReaderTest.class.getResourceAsStream("/exampleWithoutHref.xml")))
-      },
-      {
-        representationFactory.readRepresentation(
-            HAL_JSON,
-            new InputStreamReader(
-                ResourceReaderTest.class.getResourceAsStream("/exampleWithoutHref.json")))
-      },
+      {representationFactory.readRepresentation(HAL_XML, new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/exampleWithoutHref.xml")))},
+      {representationFactory.readRepresentation(HAL_JSON, new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/exampleWithoutHref.json")))},
     };
   }
 
@@ -92,18 +56,14 @@ public class ResourceReaderTest {
     return new Object[][] {
       {
         representationFactory.readRepresentation(
-            HAL_XML,
-            new InputStreamReader(
-                ResourceReaderTest.class.getResourceAsStream(
-                    "/exampleWithUnderscoredProperty.json")))
+            HAL_XML, new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/exampleWithUnderscoredProperty.json")))
       },
     };
   }
 
   @Test(dataProvider = "provideResources")
   public void testReader(ReadableRepresentation representation) {
-    assertThat(representation.getResourceLink().getHref())
-        .isEqualTo("https://example.com/api/customer/123456");
+    assertThat(representation.getResourceLink().getHref()).isEqualTo("https://example.com/api/customer/123456");
     assertThat(representation.getNamespaces()).hasSize(2);
     assertThat(representation.getProperties().get("name")).isEqualTo("Example Resource");
     assertThat(representation.getValue("name")).isEqualTo("Example Resource");
@@ -131,14 +91,11 @@ public class ResourceReaderTest {
 
   @Test(dataProvider = "provideSubResources")
   public void testSubReader(ReadableRepresentation representation) {
-    assertThat(representation.getResourceLink().getHref())
-        .isEqualTo("https://example.com/api/customer/123456");
+    assertThat(representation.getResourceLink().getHref()).isEqualTo("https://example.com/api/customer/123456");
     assertThat(representation.getNamespaces()).hasSize(2);
     assertThat(representation.getCanonicalLinks()).hasSize(3);
     assertThat(representation.getResources()).hasSize(1);
-    assertThat(
-            representation.getResources().iterator().next().getValue().getProperties().get("name"))
-        .isEqualTo("Example User");
+    assertThat(representation.getResources().iterator().next().getValue().getProperties().get("name")).isEqualTo("Example User");
     assertThat(representation.getResourcesByRel("ns:user")).hasSize(1);
   }
 
