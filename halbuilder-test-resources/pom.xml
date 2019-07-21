@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.theoryinpractise</groupId>
   <artifactId>halbuilder-test-resources</artifactId>
-  <version>4.1.1-SNAPSHOT</version>
+  <version>4.1.2-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>halbuilder-test-resources</name>
   <description>Reusable test representations for the HAL XML/JSON REST format.</description>
