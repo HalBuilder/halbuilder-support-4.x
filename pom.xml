@@ -16,6 +16,7 @@
     <module>halbuilder-core</module>
     <module>halbuilder-guava</module>
     <module>halbuilder-json</module>
+    <module>halbuilder-jaxrs</module>
     <module>halbuilder-xml</module>
     <module>halbuilder-standard</module>
   </modules>
