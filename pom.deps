@@ -26,7 +26,7 @@ resolve highest com.damnhandy:handy-uri-templates:[2.1.8,3.0.0) via public;
 // compile
 resolve highest com.google.code.findbugs:jsr305:[3.0.2,4.0.0) via public;
 resolve snapshot com.theoryinpractise:halbuilder-styleguide-tile:[1.0.21,2.0.0);
-resolve snapshot com.theoryinpractise:halbuilder-build-tile:[1.0.1,2.0.0);
+resolve snapshot com.theoryinpractise:halbuilder-build-tile:[1.0.2,2.0.0);
 // Test deps
 resolve highest org.easytesting:fest-assert-core:[2.0M10,3.0.0) via public;
 resolve highest org.jacoco:jacoco-maven-plugin:[0.8.4,1.0.0) via public;
@@ -65,7 +65,7 @@ resolved com.google.code.findbugs:annotations:2.0.3 from com.theoryinpractise:ha
 resolved com.google.code.findbugs:jsr305:3.0.2 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
 resolved com.google.guava:failureaccess:1.0.1 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
 resolved com.google.guava:guava:28.0-jre from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
-resolved com.theoryinpractise:halbuilder-build-tile:1.0.1 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
+resolved com.theoryinpractise:halbuilder-build-tile:1.0.2 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
 resolved com.theoryinpractise:halbuilder-styleguide-tile:1.0.21 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
 resolved com.theoryinpractise:quickcheckng:1.1.4 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
 resolved io.fastjson:boon:0.34 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
