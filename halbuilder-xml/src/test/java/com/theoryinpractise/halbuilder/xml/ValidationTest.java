@@ -1,12 +1,13 @@
 package com.theoryinpractise.halbuilder.xml;
 
-import static org.fest.assertions.api.Assertions.assertThat;
-
 import com.theoryinpractise.halbuilder.api.Contract;
 import com.theoryinpractise.halbuilder.api.ReadableRepresentation;
 import com.theoryinpractise.halbuilder.api.RepresentationFactory;
-import java.io.InputStreamReader;
 import org.testng.annotations.Test;
+
+import java.io.InputStreamReader;
+
+import static com.google.common.truth.Truth.assertThat;
 
 public class ValidationTest {
 

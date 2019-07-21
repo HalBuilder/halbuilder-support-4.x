@@ -1,7 +1,5 @@
 package com.theoryinpractise.halbuilder.xml;
 
-import static org.fest.assertions.api.Assertions.assertThat;
-
 import com.damnhandy.uri.template.MalformedUriTemplateException;
 import com.damnhandy.uri.template.UriTemplate;
 import com.damnhandy.uri.template.VariableExpansionException;
@@ -15,11 +13,14 @@ import com.theoryinpractise.halbuilder.api.Representation;
 import com.theoryinpractise.halbuilder.api.RepresentationException;
 import com.theoryinpractise.halbuilder.api.RepresentationFactory;
 import com.theoryinpractise.halbuilder.impl.representations.MutableRepresentation;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+
+import static com.google.common.truth.Truth.assertThat;
 
 public class RenderingTest {
   private static final String ROOT_URL = "https://example.com";

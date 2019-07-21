@@ -1,17 +1,18 @@
 package com.theoryinpractise.halbuilder.xml;
 
-import static com.theoryinpractise.halbuilder.api.RepresentationFactory.HAL_JSON;
-import static com.theoryinpractise.halbuilder.api.RepresentationFactory.HAL_XML;
-import static org.fest.assertions.api.Assertions.assertThat;
-
 import com.theoryinpractise.halbuilder.api.Link;
 import com.theoryinpractise.halbuilder.api.ReadableRepresentation;
 import com.theoryinpractise.halbuilder.api.RepresentationException;
 import com.theoryinpractise.halbuilder.api.RepresentationFactory;
-import java.io.InputStreamReader;
-import java.io.StringReader;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.io.InputStreamReader;
+import java.io.StringReader;
+
+import static com.google.common.truth.Truth.assertThat;
+import static com.theoryinpractise.halbuilder.api.RepresentationFactory.HAL_JSON;
+import static com.theoryinpractise.halbuilder.api.RepresentationFactory.HAL_XML;
 
 public class ResourceReaderTest {
 

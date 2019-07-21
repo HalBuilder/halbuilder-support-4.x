@@ -10,8 +10,8 @@ import org.testng.annotations.Test;
 
 import java.io.InputStreamReader;
 
-import static org.fest.assertions.api.Assertions.assertThat;
-import static org.fest.assertions.api.Assertions.fail;
+import static com.google.common.truth.Truth.assertThat;
+import static org.testng.Assert.fail;
 
 public class InterfaceSatisfactionTest {
 
@@ -124,6 +124,6 @@ public class InterfaceSatisfactionTest {
             RepresentationFactory.HAL_XML, new InputStreamReader(InterfaceSatisfactionTest.class.getResourceAsStream("/exampleWithNullProperty.xml")));
 
     assertThat(representation.toClass(INullprop.class)).isNotNull();
-    assertThat(representation.toClass(INullprop.class).nullprop() == null);
+    assertThat(representation.toClass(INullprop.class).nullprop()).isNull();
   }
 }
