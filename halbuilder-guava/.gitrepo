@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/HalBuilder/halbuilder-guava.git
 	branch = support/4.x
-	commit = 81dc62c00e44644e3441b35f3003e3f5571f07b8
-	parent = 9061317720a345d6609c127511f510a4d4f8018b
+	commit = 38b4f55c75b38f631aa06bf07da068f1dadc6a47
+	parent = d16472273e0cda8c5c342cdba2ff3dbe1d6841da
 	method = merge
 	cmdver = 0.4.0
