@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/HalBuilder/halbuilder-json.git
 	branch = support/4.x
-	commit = 9e6316d31589049b23fe471513eaad0a432ef1cb
-	parent = a8322cea8809b0bf683f61c803b689af7f4dbf27
+	commit = ae5b5a136ba0691da337d62145a46ca2dbe8d0dc
+	parent = 4ad44ae9bd6abb736fabec9d3de6e3fba55556bf
 	method = merge
-	cmdver = 0.4.0
+	cmdver = 0.4.1
