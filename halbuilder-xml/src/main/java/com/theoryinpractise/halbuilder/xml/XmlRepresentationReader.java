@@ -33,6 +33,8 @@ public class XmlRepresentationReader implements RepresentationReader {
 
   public static final URI DROP_EXTERNAL_ENTITY = URI.create("urn:halbuilder:drop-external-entities");
 
+  public static final URI ALLOW_EXTERNAL_ENTITY = URI.create("urn:halbuilder:allow-external-entities");
+
   private AbstractRepresentationFactory representationFactory;
 
   private XMLOutputter xmlOutputter;
@@ -47,13 +49,15 @@ public class XmlRepresentationReader implements RepresentationReader {
     try {
       SAXBuilder builder = new SAXBuilder();
       // http://www.jdom.org/docs/faq.html#a0350
-      if (representationFactory.getFlags().contains(DROP_EXTERNAL_ENTITY)) {
-        builder.setEntityResolver((publicId, systemId) -> new InputSource(new StringReader("")));
-      } else {
-        builder.setEntityResolver(
-            (publicId, systemId) -> {
-              throw new RepresentationException("External entity expansion found and rejected for " + Objects.toString(publicId, systemId));
-            });
+      if (!representationFactory.getFlags().contains(ALLOW_EXTERNAL_ENTITY)) {
+        if (representationFactory.getFlags().contains(DROP_EXTERNAL_ENTITY)) {
+          builder.setEntityResolver((publicId, systemId) -> new InputSource(new StringReader("")));
+        } else {
+          builder.setEntityResolver(
+              (publicId, systemId) -> {
+                throw new RepresentationException("External entity expansion found and rejected for " + Objects.toString(publicId, systemId));
+              });
+        }
       }
       Document d = builder.build(reader);
       Element root = d.getRootElement();

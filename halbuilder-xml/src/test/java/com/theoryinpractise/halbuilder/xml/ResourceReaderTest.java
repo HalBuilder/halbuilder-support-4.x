@@ -76,13 +76,26 @@ public class ResourceReaderTest {
   }
 
   @Test
+  public void testExternalEntityExpansionAllowed() {
+    RepresentationFactory representationFactory = new XmlRepresentationFactory();
+    representationFactory.withFlag(XmlRepresentationReader.ALLOW_EXTERNAL_ENTITY);
+
+    ReadableRepresentation representation =
+        representationFactory.readRepresentation(HAL_XML, new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/example_entity.xml")));
+
+    assertThat(representation.getValue("name")).isEqualTo("\"Example Resource\"");
+    assertThat(representation.getValue("id")).isEqualTo("local entity");
+    assertThat((String) representation.getValue("payload")).contains("HAL+XML serializer/deserializer extension to the HalBuilder Library");
+  }
+
+  @Test
   public void testExternalEntityExpansionRejection() {
     RepresentationFactory representationFactory = new XmlRepresentationFactory();
 
     try {
       representationFactory.readRepresentation(HAL_XML, new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/example_entity.xml")));
     } catch (RepresentationException e) {
-      assertThat(e.getCause().getMessage()).isEqualTo("External entity expansion found and rejected for file://pom.xml");
+      assertThat(e.getCause().getMessage()).matches("^External entity expansion found and rejected for .*pom.xml$");
     }
   }
 

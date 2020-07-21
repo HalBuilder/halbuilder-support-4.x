@@ -1,4 +1,4 @@
-<!DOCTYPE foo [ <!ENTITY myentity "local entity" > <!ENTITY pomcontents SYSTEM "file://pom.xml" > ]>
+<!DOCTYPE foo [ <!ENTITY myentity "local entity" > <!ENTITY pomcontents SYSTEM "file:./pom.xml" > ]>
 <resource xmlns:ns="https://example.com/apidocs/ns/{rel}" xmlns:role="https://example.com/apidocs/role/{rel}" href="https://example.com/api/customer/123456">
   <link rel="ns:parent" href="https://example.com/api/customer/1234" name="bob" title="The Parent" hreflang="en" />
   <link rel="ns:users" href="https://example.com/api/customer/123456?users" />
