@@ -57,9 +57,33 @@ public class ResourceReaderTest {
     return new Object[][] {
       {
         representationFactory.readRepresentation(
-            HAL_XML, new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/exampleWithUnderscoredProperty.json")))
+            HAL_XML, new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/exampleWithUnderscoredProperty.xml")))
       },
     };
+  }
+
+  @Test
+  public void testExternalEntityExpansionDropping() {
+    RepresentationFactory representationFactory = new XmlRepresentationFactory();
+    representationFactory.withFlag(XmlRepresentationReader.DROP_EXTERNAL_ENTITY);
+
+    ReadableRepresentation representation =
+        representationFactory.readRepresentation(HAL_XML, new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/example_entity.xml")));
+
+    assertThat(representation.getValue("name")).isEqualTo("\"Example Resource\"");
+    assertThat(representation.getValue("id")).isEqualTo("local entity");
+    assertThat(representation.getValue("payload")).isEqualTo("");
+  }
+
+  @Test
+  public void testExternalEntityExpansionRejection() {
+    RepresentationFactory representationFactory = new XmlRepresentationFactory();
+
+    try {
+      representationFactory.readRepresentation(HAL_XML, new InputStreamReader(ResourceReaderTest.class.getResourceAsStream("/example_entity.xml")));
+    } catch (RepresentationException e) {
+      assertThat(e.getCause().getMessage()).isEqualTo("External entity expansion found and rejected for file://pom.xml");
+    }
   }
 
   @Test(dataProvider = "provideResources")

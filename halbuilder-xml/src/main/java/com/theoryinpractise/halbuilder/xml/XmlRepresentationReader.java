@@ -1,5 +1,26 @@
 package com.theoryinpractise.halbuilder.xml;
 
+import com.theoryinpractise.halbuilder.AbstractRepresentationFactory;
+import com.theoryinpractise.halbuilder.api.ContentRepresentation;
+import com.theoryinpractise.halbuilder.api.Representation;
+import com.theoryinpractise.halbuilder.api.RepresentationException;
+import com.theoryinpractise.halbuilder.api.RepresentationReader;
+import com.theoryinpractise.halbuilder.impl.representations.ContentBasedRepresentation;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.Namespace;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.XMLOutputter;
+import org.xml.sax.InputSource;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.net.URI;
+import java.util.List;
+import java.util.Objects;
+
 import static com.theoryinpractise.halbuilder.impl.api.Support.HREF;
 import static com.theoryinpractise.halbuilder.impl.api.Support.HREFLANG;
 import static com.theoryinpractise.halbuilder.impl.api.Support.NAME;
@@ -8,23 +29,10 @@ import static com.theoryinpractise.halbuilder.impl.api.Support.REL;
 import static com.theoryinpractise.halbuilder.impl.api.Support.TITLE;
 import static com.theoryinpractise.halbuilder.xml.XmlRepresentationFactory.XSI_NAMESPACE;
 
-import com.theoryinpractise.halbuilder.AbstractRepresentationFactory;
-import com.theoryinpractise.halbuilder.api.ContentRepresentation;
-import com.theoryinpractise.halbuilder.api.Representation;
-import com.theoryinpractise.halbuilder.api.RepresentationException;
-import com.theoryinpractise.halbuilder.api.RepresentationReader;
-import com.theoryinpractise.halbuilder.impl.representations.ContentBasedRepresentation;
-import java.io.IOException;
-import java.io.Reader;
-import java.util.List;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.Namespace;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.XMLOutputter;
-
 public class XmlRepresentationReader implements RepresentationReader {
+
+  public static final URI DROP_EXTERNAL_ENTITY = URI.create("urn:halbuilder:drop-external-entities");
+
   private AbstractRepresentationFactory representationFactory;
 
   private XMLOutputter xmlOutputter;
@@ -37,12 +45,20 @@ public class XmlRepresentationReader implements RepresentationReader {
   @Override
   public ContentRepresentation read(Reader reader) {
     try {
-      Document d = new SAXBuilder().build(reader);
+      SAXBuilder builder = new SAXBuilder();
+      // http://www.jdom.org/docs/faq.html#a0350
+      if (representationFactory.getFlags().contains(DROP_EXTERNAL_ENTITY)) {
+        builder.setEntityResolver((publicId, systemId) -> new InputSource(new StringReader("")));
+      } else {
+        builder.setEntityResolver(
+            (publicId, systemId) -> {
+              throw new RepresentationException("External entity expansion found and rejected for " + Objects.toString(publicId, systemId));
+            });
+      }
+      Document d = builder.build(reader);
       Element root = d.getRootElement();
       return readRepresentation(root);
-    } catch (JDOMException e) {
-      throw new RepresentationException(e);
-    } catch (IOException e) {
+    } catch (JDOMException | IOException e) {
       throw new RepresentationException(e);
     }
   }
