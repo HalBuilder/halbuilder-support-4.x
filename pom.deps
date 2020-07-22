@@ -25,8 +25,8 @@ resolve highest io.fastjson:boon:[0.34,1.0.0) via public;
 resolve highest com.damnhandy:handy-uri-templates:[2.1.8,3.0.0) via public;
 // compile
 resolve highest com.google.code.findbugs:jsr305:[3.0.2,4.0.0) via public;
-resolve snapshot com.theoryinpractise:halbuilder-styleguide-tile:[1.0.24,2.0.0);
-resolve snapshot com.theoryinpractise:halbuilder-build-tile:[1.0.3,2.0.0);
+resolve snapshot com.theoryinpractise:halbuilder-styleguide-tile:[1.0.25,2.0.0);
+resolve snapshot com.theoryinpractise:halbuilder-build-tile:[1.0.4,2.0.0);
 // Test deps
 resolve highest com.google.truth:truth:[1.0.1,2.0.0) via public;
 resolve highest com.google.truth:truth-java8-extension:[1.0.0,2.0.0) via public;
@@ -68,6 +68,8 @@ resolved com.google.code.findbugs:jsr305:3.0.2 from com.theoryinpractise:halbuil
 resolved com.google.guava:failureaccess:1.0.1 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
 resolved com.google.guava:guava:29.0-jre from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
 resolved com.google.truth:truth:1.0.1 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
+resolved com.theoryinpractise:halbuilder-build-tile:1.0.4 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
+resolved com.theoryinpractise:halbuilder-styleguide-tile:1.0.25 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
 resolved com.theoryinpractise:quickcheckng:1.1.4 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
 resolved io.fastjson:boon:0.34 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
 resolved io.repaint.maven:tiles-maven-plugin:2.17 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
