@@ -4,7 +4,7 @@
 ; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
 ;
 [subrepo]
-	remote = https://github.com/HalBuilder/halbuilder-jaxrs.git
+	remote = git@github.com:HalBuilder/halbuilder-jaxrs.git
 	branch = support/4.x
 	commit = cbe66274c41a2949a02c3a3cbe2bfcd512fded46
 	parent = a1acf0dd1edeb1cb908ad001fa9f338fc402afa6

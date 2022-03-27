@@ -4,7 +4,7 @@
 ; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
 ;
 [subrepo]
-	remote = https://github.com/HalBuilder/halbuilder-api.git
+	remote = git@github.com:HalBuilder/halbuilder-api.git
 	branch = support/4.x
 	commit = 969a225ac3b2501ece9f2f0e56aa35d868181535
 	parent = 755d41791338db710a4891a3ac8be7fb97397b4e
