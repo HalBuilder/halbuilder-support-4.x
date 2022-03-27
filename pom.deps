@@ -23,6 +23,7 @@ resolve highest com.fasterxml.jackson.datatype:jackson-datatype-pcollections:[2.
 resolve highest com.fasterxml.jackson.module:jackson-module-parameter-names:[2.13.2,3.0.0) via public filtering /^.*(alpha|beta|rc|pr|SNAPSHOT).*$/;
 resolve highest io.fastjson:boon:[0.34,1.0.0) via public;
 resolve highest com.damnhandy:handy-uri-templates:[2.1.8,3.0.0) via public;
+resolve highest org.jdom:jdom:[2.0.2,3.0.0) via public;
 // compile
 resolve highest com.google.code.findbugs:jsr305:[3.0.2,4.0.0) via public;
 resolve snapshot com.theoryinpractise:halbuilder-styleguide-tile:[1.0.26,2.0.0);
@@ -88,6 +89,7 @@ locked org.easytesting:fest-reflect:1.4.1 from com.theoryinpractise:halbuilder-s
 locked org.easytesting:fest-util:1.2.5 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
 locked org.immutables:value:2.9.0 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
 locked org.jacoco:jacoco-maven-plugin:0.8.7 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
+locked org.jdom:jdom:2.0.2 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
 locked org.jetbrains:annotations:23.0.0 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
 locked org.jooq:joor-java-8:0.9.14 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
 locked org.mockito:mockito-core:2.28.2 from com.theoryinpractise:halbuilder-support-4.x:4.1.1;
