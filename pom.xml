@@ -32,27 +32,27 @@
         <groupId>com.smxemail</groupId>
         <artifactId>rangeresolver-maven-plugin</artifactId>
         <version>1.1.44</version>
-        <executions>
-          <execution>
-            <id>resolve-properties</id>
-            <phase>initialize</phase>
-            <goals>
-              <goal>resolve-properties</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>attach-deps</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>attach-deps</goal>
-            </goals>
-          </execution>
-        </executions>
         <configuration>
           <commitChanges>true</commitChanges>
           <pushChanges>false</pushChanges>
           <strictDependency>false</strictDependency>
         </configuration>
+        <executions>
+          <execution>
+            <id>resolve-properties</id>
+            <goals>
+              <goal>resolve-properties</goal>
+            </goals>
+            <phase>initialize</phase>
+          </execution>
+          <execution>
+            <id>attach-deps</id>
+            <goals>
+              <goal>attach-deps</goal>
+            </goals>
+            <phase>verify</phase>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
