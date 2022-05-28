@@ -31,7 +31,7 @@
       <plugin>
         <groupId>com.smxemail</groupId>
         <artifactId>rangeresolver-maven-plugin</artifactId>
-        <version>1.1.44</version>
+        <version>1.1.58</version>
         <configuration>
           <commitChanges>true</commitChanges>
           <pushChanges>false</pushChanges>
