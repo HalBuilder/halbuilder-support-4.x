@@ -6,7 +6,7 @@
 [subrepo]
 	remote = git@github.com:HalBuilder/halbuilder-jaxrs.git
 	branch = support/4.x
-	commit = 4ee29ee4ebae690597830f05cee344b246679edf
-	parent = 034866d753b339048bb1bcde6c79798d2166a3fb
+	commit = 3888d4c45e24066bab08c9360c3302de2d0c0e13
+	parent = a8e6afa4b82f20b87747fc377e1c23bd2cc23cac
 	method = merge
 	cmdver = 0.4.3
