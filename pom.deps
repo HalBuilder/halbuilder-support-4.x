@@ -31,6 +31,7 @@ resolve snapshot com.theoryinpractise:halbuilder-build-tile:[1.0.4,2.0.0);
 // Test deps
 resolve highest com.google.truth:truth:[1.1.3,2.0.0) via public;
 resolve highest com.google.truth:truth-java8-extension:[1.0.0,2.0.0) via public;
+resolve highest com.jayway.jsonpath:json-path:[2.7.0,3.0.0) via central;
 resolve highest org.easytesting:fest-assert-core:[2.0M10,3.0.0) via public;
 resolve highest org.jacoco:jacoco-maven-plugin:[0.8.8,1.0.0) via public;
 resolve highest com.google.code.findbugs:annotations:[2.0.3,3.0.0) via public;
